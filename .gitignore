@@ -1,0 +1,3 @@
+# generati dal motore a ogni caricamento
+.claude-plugin/types/
+tsconfig.json

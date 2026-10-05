@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "bubble-contesto",
+  "description": "La bubble AI, MAX che si riempie con il contesto della sessione: un mod di Claude Code.",
+  "owner": {
+    "name": "Max Turazzini",
+    "url": "https://github.com/maxturazzini"
+  },
+  "plugins": [
+    {
+      "name": "bubble-contesto",
+      "description": "Un pannello con la bubble AI, MAX che si riempie con il contesto della sessione e dice quando compattare.",
+      "version": "0.1.0",
+      "author": { "name": "Max Turazzini", "url": "https://maxturazzini.com" },
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://github.com/maxturazzini/bubble-contesto",
+      "license": "MIT"
+    }
+  ]
+}

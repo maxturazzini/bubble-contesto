@@ -1,0 +1,13 @@
+{
+  "name": "bubble-contesto",
+  "version": "0.1.0",
+  "description": "La bubble AI, MAX che si riempie con il contesto della sessione",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "Max Turazzini",
+    "url": "https://maxturazzini.com"
+  },
+  "homepage": "https://github.com/maxturazzini/bubble-contesto",
+  "repository": "https://github.com/maxturazzini/bubble-contesto",
+  "license": "MIT"
+}

@@ -10,8 +10,20 @@ l'agente fatica a tenere a mente l'inizio. Questo mod lo rende visibile. Una bub
 contesto è solo contorno; a ogni risposta il liquido sale, sopra il 70% sciaborda, al 90%
 la bubble guarda in alto e il pannello propone `/compact`. Dopo la compattazione si svuota.
 
-La bubble è piena a **200k token**, o prima se la finestra del modello è più piccola: con
-le finestre da un milione la qualità cala molto prima di riempirle.
+### Quando è piena
+
+Il limite non è scritto nel mod: è la **finestra di contesto del modello che state usando**,
+e il mod la legge dal motore a ogni risposta. Se cambiate modello a metà sessione (`/model`),
+la scala cambia con lui: un modello da 200k token riempie la bubble a 200k, uno da 128k a
+128k.
+
+C'è un solo tetto fisso: con le finestre da **1 milione** di token la bubble è comunque piena
+a 200k. La qualità cala molto prima di riempire un milione, e una scala sulla finestra intera
+lascerebbe la bubble quasi vuota proprio quando conviene compattare. Il tetto è la costante
+`FULL_AT` in `hooks/bubble.ts`.
+
+Le immagini qui sopra mostrano una sessione con finestra da 1 milione, quindi sulla scala
+da 200k.
 
 ## Dove funziona
 
@@ -63,7 +75,7 @@ claude plugin test .
 ## English
 
 A Claude Code mod that draws a speech-bubble mascot filling up with the session's context
-(full at 200k tokens, or the model's window if smaller), and suggests `/compact` when it's
+(scaled to the context window of the model in use, read live from the engine, capped at 200k tokens for 1M-token windows), and suggests `/compact` when it's
 nearly full. It draws in the Claude Desktop **Code** tab (animated SVG) and in the terminal
 (text bar). The VS Code extension doesn't draw mod UI yet. UI strings are in Italian.
 

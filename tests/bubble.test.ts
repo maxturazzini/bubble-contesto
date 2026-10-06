@@ -29,8 +29,9 @@ test('il liquido sale con la percentuale, dal fondo alla cima', async () => {
   expect(levelY(30)).toBeGreaterThan(levelY(60))
 })
 
-test('la scala è 200k token, o la finestra se è più piccola', async () => {
-  expect(percentOf(66_000, 1_000_000)).toBe(33)
+test('la scala è la finestra del modello, fino a un milione di token', async () => {
+  expect(percentOf(330_000, 1_000_000)).toBe(33)
+  expect(percentOf(500_000, 2_000_000)).toBe(50)
   expect(percentOf(66_000, 200_000)).toBe(33)
   expect(percentOf(64_000, 128_000)).toBe(50)
   expect(percentOf(null, 1_000_000)).toBeNull()
@@ -49,13 +50,13 @@ test('prima della prima misura la bubble è solo contorno', async ($, on) => {
   await ui.unmount()
 })
 
-test('con la finestra da un milione si riempie sulla scala da 200k', async ($, on) => {
+test('con la finestra da un milione si riempie sulla scala da un milione', async ($, on) => {
   mock.clock(on)
   on('session.measure', (_, e) => ({ changed: e.changed }))
-  await $.session.measure(measure(66_000, 1_000_000))
+  await $.session.measure(measure(330_000, 1_000_000))
   for (const surface of ['desktop', 'mobile', 'terminal'] as const) {
     const ui = await $.ui.mount({ ...PANE, surface })
-    expect(await ui.find({ type: 'Text', text: /Contesto 66k su 200k token/ })).toBeDefined()
+    expect(await ui.find({ type: 'Text', text: /Contesto 330k su 1M token/ })).toBeDefined()
     await ui.unmount()
   }
   const terminal = await $.ui.mount({ ...PANE, surface: 'terminal' })
@@ -71,7 +72,7 @@ test('con la finestra da un milione si riempie sulla scala da 200k', async ($, o
 test('piena: propone /compact', async ($, on) => {
   mock.clock(on)
   on('session.measure', (_, e) => ({ changed: e.changed }))
-  await $.session.measure(measure(186_000, 1_000_000))
+  await $.session.measure(measure(930_000, 1_000_000))
   const ui = await $.ui.mount({ ...PANE, surface: 'desktop' })
   expect(await ui.find({ type: 'Text', text: /\/compact/ })).toBeDefined()
   await ui.unmount()
@@ -86,7 +87,7 @@ test('dopo /compact dice che si riparte da un riassunto', async () => {
 })
 
 test('il disegno resta sotto il limite di Svg', async () => {
-  for (const tokens of [null, 0, 84_000, 186_000, 400_000]) {
+  for (const tokens of [null, 0, 84_000, 186_000, 400_000, 930_000, 1_200_000]) {
     const source = bubbleSvg({ ...EMPTY, tokens, window: 1_000_000, previous: 10_000, changedAt: 0 }, 100)
     expect(source.length).toBeLessThan(131072)
   }

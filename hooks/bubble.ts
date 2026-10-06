@@ -2,10 +2,9 @@ import type { Fill } from '../types'
 
 export const EMPTY: Fill = { tokens: null, window: null, previous: null, changedAt: null, isCompacted: false }
 
-// La bubble è piena a 200k token, o prima se la finestra del modello è più piccola.
-// Con le finestre da un milione la qualità cala molto prima di riempirle: una scala sulla
-// finestra intera lascerebbe la bubble quasi vuota proprio quando conviene compattare.
-export const FULL_AT = 200_000
+// La bubble è piena quando è piena la finestra del modello, fino a un tetto di un milione
+// di token: anche le finestre da un milione si misurano intere.
+export const FULL_AT = 1_000_000
 
 // quanto resta la salita animata dopo un cambio di livello: un ridisegno successivo non la ripete
 const RISE_MS = 2_000
@@ -51,7 +50,8 @@ const wave = (amp: number, phase: number): string => {
   return `${d} L 380 ${BELOW} L 60 ${BELOW} Z`
 }
 
-const k = (n: number) => (n >= 1000 ? `${Math.round(n / 1000)}k` : String(n))
+const k = (n: number) =>
+  n >= 1_000_000 ? `${Number((n / 1_000_000).toFixed(1))}M` : n >= 1000 ? `${Math.round(n / 1000)}k` : String(n)
 
 export const describeFill = (f: Fill): string[] => {
   if (f.tokens === null) {

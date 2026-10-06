@@ -17,13 +17,10 @@ e il mod la legge dal motore a ogni risposta. Se cambiate modello a metà sessio
 la scala cambia con lui: un modello da 200k token riempie la bubble a 200k, uno da 128k a
 128k.
 
-C'è un solo tetto fisso: con le finestre da **1 milione** di token la bubble è comunque piena
-a 200k. La qualità cala molto prima di riempire un milione, e una scala sulla finestra intera
-lascerebbe la bubble quasi vuota proprio quando conviene compattare. Il tetto è la costante
-`FULL_AT` in `hooks/bubble.ts`.
+Vale anche per le finestre da **1 milione** di token: la bubble è piena a un milione. Il
+tetto è la costante `FULL_AT` in `hooks/bubble.ts`.
 
-Le immagini qui sopra mostrano una sessione con finestra da 1 milione, quindi sulla scala
-da 200k.
+Le immagini qui sopra mostrano un modello da 200k token.
 
 ## Dove funziona
 
@@ -75,7 +72,7 @@ claude plugin test .
 ## English
 
 A Claude Code mod that draws a speech-bubble mascot filling up with the session's context
-(scaled to the context window of the model in use, read live from the engine, capped at 200k tokens for 1M-token windows), and suggests `/compact` when it's
+(scaled to the context window of the model in use, read live from the engine, up to 1M tokens), and suggests `/compact` when it's
 nearly full. It draws in the Claude Desktop **Code** tab (animated SVG) and in the terminal
 (text bar). The VS Code extension doesn't draw mod UI yet. UI strings are in Italian.
 
